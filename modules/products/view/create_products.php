@@ -23,20 +23,20 @@
                     <div id="e_serial_number"></div>
                     <br>
                     <!-- Select Basic -->
-                    <label for="category" class="col-md-4 control-label">Tipo</label>
-                    <select id="category"  class="form-control input-md">    
+                    <label for="category" class="col-md-4 control-label">Country</label>
+                    <select id="category"  class="form-control input-md">
                     </select>
                     <span id="e_category" class="styerror"></span>
                     <br>
                     <!-- Select Basic -->
-                    <label for="trademark" class="col-md-4 control-label">Marca</label>
+                    <label for="trademark" class="col-md-4 control-label">Trademark</label>
                     <select id="trademark" class="form-control input-md">
-                        
+
                     </select>
                     <span id="e_trademark" class="styerror"></span>
                     <br>
                     <!-- Select Basic -->
-                    <label for="model" class="col-md-4 control-label">Modelo</label>
+                    <label for="model" class="col-md-4 control-label">Model</label>
                     <select id="model" class="form-control input-md">
                         <span id="e_model" class="styerror"></span>
                     </select>

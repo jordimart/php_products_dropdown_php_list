@@ -162,6 +162,7 @@ jQuery.fn.fill_or_clean = function() {
 }; // function
 
 Dropzone.autoDiscover = false;
+// Inicializamos aquí
 $(document)
   .ready(function() {
 
@@ -207,12 +208,11 @@ $(document)
 
         if (response.product === "") {
           $("#serial_number").val('');
-          $("#category").val('Photovoltaic');
+          $("#category").val('');
           $("#trademark")
-            .val('Sunways'); // ojo sedebe cambiar si filtramospor base de
+            .val(''); // ojo sedebe cambiar si filtramos por base de
           // datos
-          $("#model")
-            .val('NT6000'); // ojo sedebe cambiar si filtramospor base
+          $("#model").val(''); // ojo sedebe cambiar si filtramos por base
           // de datos
           $("#date_entry").val('');
           $("#date_exit").val('');
@@ -281,7 +281,7 @@ $(document)
       },
       "json");
 
-    // Dropzone function //////////////////////////////////
+    // Dropzone inicialización //////////////////////////////////
     $("#dropzone")
       .dropzone({
         url: "modules/products/controller/controller_products.class.php?upload=true",
@@ -347,6 +347,40 @@ $(document)
       });
   });
 
+load_countries_v1(); // inicializamos paises
+load_trademarks_v1(); // inicializamos marcas
+$("#trademark")
+  .change(function() {
+    var trademark = $(this).val();
+    var model = $("#model");
+
+    if (trademark !== 'Select trademark') {
+      model.prop('disabled', false);
+      load_models_v1(trademark);
+
+    } else {
+      model.prop('disabled', true);
+      $("#model").empty();
+    } // fi else
+  });
+
+/*$("#trademark")
+  .change(function() {
+    var prov = $(this).val();
+    if (prov > 0) {
+      load_models_v1(prov);
+    } else {
+      $("#model").prop('disabled', false);
+    }
+  });*/
+
+$("#model").empty();
+$("#model")
+  .append('<option value="" selected="selected">Select model</option>');
+$("#model").prop('disabled', true);
+
+// Cargamos estas funciones de javascript para que vaya validando mientras
+// escribimos
 var string_reg = /^[A-Za-z0-9- -.]{2,20}$/;
 var date_reg =
   /^(0[1-9]|[12][0-9]|3[01])[- \/.](0[1-9]|1[012])[- \/.](19|20)\d\d$/;
@@ -390,14 +424,16 @@ $("#description")
       $(".error").fadeOut();
       return false;
     }
-  });
+  }); // fin del inicio
 
+// Funcion validate
 function validate_products() {
+  // Recogemos datos
   var result = true;
   var serial_number = document.getElementById('serial_number').value;
-  var category = document.getElementById('category').value;
-  var trademark = document.getElementById('trademark').value;
-  var model = document.getElementById('model').value;
+  var category = $('#category').val();
+  var trademark = $('trademark').val();
+  var model = $('model').val();
   var date_entry = document.getElementById('date_entry').value;
   var date_exit = document.getElementById('date_exit').value;
   var purchase_price = document.getElementById('purchase_price').value;
@@ -428,6 +464,7 @@ function validate_products() {
     }
   }
 
+  // Expresiones regulares
   var string_reg = /^[A-Za-z0-9- -.]{2,20}$/;
   var date_reg =
     /^(0[1-9]|[12][0-9]|3[01])[- \/.](0[1-9]|1[012])[- \/.](19|20)\d\d$/;
@@ -435,7 +472,8 @@ function validate_products() {
   var measure_reg = /^[0-9]\d{1,4}?$/;
   var desc_reg = /^[A-Za-z0-9- -.]{2,80}$/;
 
-  $(".error").remove();
+  $(".error").remove(); // quito error si hay
+  // si esta vacio o esta el error
   if ($("#serial_number").val() == "" ||
     $("#serial_number").val() == "Entry serial number js") {
     $("#serial_number")
@@ -443,6 +481,7 @@ function validate_products() {
       .after("<span class='error'>Entry serial number js</span>");
     result = false;
     return false;
+    // sino pasamos expresion regular al valor
   } else if (!string_reg.test($("#serial_number").val())) {
     $("#serial_number")
       .focus()
@@ -450,7 +489,7 @@ function validate_products() {
     result = false;
     return false;
   }
-  $(".error").remove();
+
   if ($("#date_entry").val() == "" ||
     $("#date_entry").val() == "Entry date entry js") {
     $("#date_entry")
@@ -466,7 +505,6 @@ function validate_products() {
     return false;
   }
 
-  $(".error").remove();
   if ($("#date_exit").val() == "" ||
     $("#date_exit").val() == "Entry date of birth") {
     $("#date_exit")
@@ -590,6 +628,7 @@ function validate_products() {
     return false;
   }
 
+  // si los resultados son buenos lo enviamos a php
   if (result) {
     var data = {
       "serial_number": serial_number,
@@ -617,8 +656,8 @@ function validate_products() {
         },
 
         function(response) {
-          console.log(response);
-          console.log(response.products);
+          // console.log(response);
+          // console.log(response.products);
 
           if (response.success) {
             window.location.href = response.redirect;
@@ -725,153 +764,205 @@ function validate_products() {
   }
 }
 
-load_countries_v1();
-    $("#provincia").empty();
-    $("#provincia").append('<option value="" selected="selected">Selecciona una Provincia</option>');
-    $("#provincia").prop('disabled', true);
-    $("#poblacion").empty();
-    $("#poblacion").append('<option value="" selected="selected">Selecciona una Poblacion</option>');
-    $("#poblacion").prop('disabled', true);
-    
-    $("#pais").change(function() {
-    var pais = $(this).val();
-    var provincia = $("#provincia");
-    var poblacion = $("#poblacion");
-        
-    if(pais !== 'ES'){
-           provincia.prop('disabled', true);
-           poblacion.prop('disabled', true);
-           $("#provincia").empty();
-         $("#poblacion").empty();
-    }else{
-           provincia.prop('disabled', false);
-           poblacion.prop('disabled', false);
-           load_provincias_v1();
-    }//fi else
-  });
-  
-  $("#provincia").change(function() {
+/*load_countries_v1();
+// load_trademark_v1();
+$("#trademark").empty();
+$("#trademark")
+  .append('<option value="" selected="selected">Select trademark</option>');
+$("#trademark").prop('disabled', true);
+$("#model").empty();
+$("#model")
+  .append('<option value="" selected="selected">Select model</option>');
+$("#model").prop('disabled', true);*/
+
+/// rectificat
+
+/*$("#trademark")
+  .change(function() {
+    var trademark = $(this).val();
+    var model = $("#model");
+
+    if (trademark !== 'Select trademark') {
+      model.prop('disabled', false);
+      load_models_v1();
+
+    } else {
+      model.prop('disabled', true);
+      $("#model").empty();
+    } // fi else
+  });*/
+
+// No me haria falta esta funcion
+
+/*$("#trademark")
+  .change(function() {
     var prov = $(this).val();
-    if(prov > 0){
-      load_poblaciones_v1(prov);
-    }else{
-      $("#poblacion").prop('disabled', false);
+    var model = $("#model");
+    if (prov === 'Select trademark') {
+      model.prop('disabled', true);
+      $("#model").empty();
+    } else {
+      model.prop('disabled', false);
+      load_trademark_v1(); // utiliza load provincias ahora trademark
+    } // fi else
+
+    if (prov > 0) {
+      load_model_v1(prov); // antes era poblaciones
+    } else {
+      $("#model").prop('disabled', false);
     }
-  });
-});
+  });*/
 
+// Segundo metodo de recoger datos en caso de que falle la url
 function load_countries_v2(cad) {
-    $.getJSON( cad, function(data) {
-      $("#pais").empty();
-      $("#pais").append('<option value="" selected="selected">Selecciona un Pais</option>');
-      
-      $.each(data, function (i, valor) {
-        $("#pais").append("<option value='" + valor.sISOCode + "'>" + valor.sName + "</option>");
-      });
-    })
-    .fail(function() {
-        alert( "error load_countries" );
+  $.getJSON(cad, function(data) {
+    $("#category").empty();
+    $("#category")
+      .append(
+        '<option value="" selected="selected">Selecciona un Pais</option>');
+
+    $.each(data, function(i, valor) {
+      $("#category")
+        .append("<option value='" + valor.sISOCode + "'>" + valor.sName +
+          "</option>");
     });
+  }).fail(function() {
+    alert("error load_countries");
+  });
 }
 
+// esta es la primera opcion que va  alaurl sino utiliza el segundo metodo
+// ficheros
 function load_countries_v1() {
-    $.get( "pages/controller_users.php?load_pais=true", 
-        function( response ) {
-            //console.log(response);
-            if(response === 'error'){
-                load_countries_v2("resources/ListOfCountryNamesByName.json");
-            }else{
-                load_countries_v2("pages/controller_users.php?load_pais=true"); //oorsprong.org
-            }
-    })
+  // console.log("entro a paises");
+  $.get(
+      "modules/products/controller/controller_products.class.php?load_pais=true",
+      function(response) {
+        // console.log(response);
+        // console.log("respuesta de paises");
+        if (response === 'error') {
+          // console.log("he entrado en error en js");
+          load_countries_v2("resources/ListOfCountryNamesByName.json");
+        } else {
+          // console.log("he entrado en error else en js");
+          load_countries_v2(
+
+            "modules/products/controller/controller_products.class.php?load_pais=true"
+          ); // oorsprong.org
+        }
+      })
     .fail(function(response) {
-        load_countries_v2("resources/ListOfCountryNamesByName.json");
+      load_countries_v2("resources/ListOfCountryNamesByName.json");
     });
 }
 
-function load_provincias_v2() {
-    $.get("resources/provinciasypoblaciones.xml", function (xml) {
-      $("#provincia").empty();
-      $("#provincia").append('<option value="" selected="selected">Selecciona una Provincia</option>');
-              
-        $(xml).find("provincia").each(function () {
-            var id = $(this).attr('id');
-            var nombre = $(this).find('nombre').text();
-            $("#provincia").append("<option value='" + id + "'>" + nombre + "</option>");
-        });
-    })
-    .fail(function() {
-        alert( "error load_provincias" );
-    });
+// be
+
+function load_trademarks_v2() {
+  $.get("modules/products/resources/trademarks_and_models.xml", function(xml) {
+    $("#trademark").empty();
+    $("#trademark")
+      .append(
+        '<option value="" selected="selected">Select trademark</option>');
+
+    $(xml)
+      .find("trademark")
+      .each(function() {
+        var id = $(this).attr('id');
+        var name = $(this).find('name').text();
+        $("#trademark")
+          .append("<option value='" + id + "'>" + name + "</option>");
+      });
+  }).fail(function() {
+    alert("error load_trademark");
+  });
 }
 
-function load_provincias_v1() { //provinciasypoblaciones.xml - xpath
-    $.get( "pages/controller_users.php?load_provincias=true", 
-        function( response ) {
-            $("#provincia").empty();
-          $("#provincia").append('<option value="" selected="selected">Selecciona una Provincia</option>');
-      
-            //alert(response);
-            var json = JSON.parse(response);
-        var provincias=json.provincias;
-        //alert(provincias);
-        //console.log(provincias);
+function load_trademarks_v1() { // provinciasypoblaciones.xml - xpath
+  $.get(
+      "modules/products/controller/controller_products.class.php?load_trademark=true",
+      function(response) {
+        $("#trademark").empty();
+        $("#trademark")
+          .append(
+            '<option value="" selected="selected">Select trademark</option>');
 
-        //alert(provincias[0].id);
-        //alert(provincias[0].nombre);
-        
-            if(provincias === 'error'){
-                load_provincias_v2();
-            }else{
-                for (var i = 0; i < provincias.length; i++) { 
-                $("#provincia").append("<option value='" + provincias[i].id + "'>" + provincias[i].nombre + "</option>");
-            }
-            }
-    })
+        // alert(response);
+        var json = JSON.parse(response); // resposta del servidor
+        var trademarks = json.trademarks;
+        // alert(trademarks);
+        // console.log(trademarks);
+
+        // alert(trademarks[0].id);
+        // alert(trademarks[0].name);
+
+        if (trademarks === 'error') {
+          load_trademarks_v2();
+        } else {
+          for (var i = 0; i < trademarks.length; i++) {
+            $("#trademark")
+              .append("<option value='" + trademarks[i].id + "'>" +
+                trademarks[i].name + "</option>");
+          }
+        }
+      })
     .fail(function(response) {
-        load_provincias_v2();
+      load_trademarks_v2();
     });
 }
 
-function load_poblaciones_v2(prov) {
-    $.get("resources/provinciasypoblaciones.xml", function (xml) {
-    $("#poblacion").empty();
-      $("#poblacion").append('<option value="" selected="selected">Selecciona una Poblacion</option>');
-          
-    $(xml).find('provincia[id=' + prov + ']').each(function(){
-        $(this).find('localidad').each(function(){
-           $("#poblacion").append("<option value='" + $(this).text() + "'>" + $(this).text() + "</option>");
-        });  
-        });
-  })
-  .fail(function() {
-        alert( "error load_poblaciones" );
-    });
+function load_models_v2(prov) {
+  $.get("modules/products/resources/trademarks_and_models.xml", function(xml) {
+    $("#model").empty();
+    $("#model")
+      .append('<option value="" selected="selected">Select model</option>');
+
+    $(xml)
+      .find('trademark[id=' + prov + ']')
+      .each(function() {
+        $(this)
+          .find('model')
+          .each(function() {
+            $("#trademark")
+              .append("<option value='" + $(this).text() + "'>" +
+                $(this).text() + "</option>");
+          });
+      });
+  }).fail(function() {
+    alert("error load_models");
+  });
 }
 
-function load_poblaciones_v1(prov) { //provinciasypoblaciones.xml - xpath
-    var datos = { idPoblac : prov  };
-  $.post("pages/controller_users.php", datos, function(response) {
-      //alert(response);
+function load_models_v1(prov) { // provinciasypoblaciones.xml - xpath
+  var datos = {
+    idPoblac: prov
+  };
+  $.post(
+      "modules/products/controller/controller_products.class.php", datos,
+      function(response) {
+        // alert(response);
         var json = JSON.parse(response);
-    var poblaciones=json.poblaciones;
-    //alert(poblaciones);
-    //console.log(poblaciones);
-    //alert(poblaciones[0].poblacion);
+        var models = json.models;
+        // alert(poblaciones);
+        // console.log(poblaciones);
+        // alert(poblaciones[0].poblacion);
 
-    $("#poblacion").empty();
-      $("#poblacion").append('<option value="" selected="selected">Selecciona una Poblacion</option>');
+        $("#model").empty();
+        $("#model")
+          .append(
+            '<option value="" selected="selected">Select model</option>');
 
-        if(poblaciones === 'error'){
-            load_poblaciones_v2(prov);
-        }else{
-            for (var i = 0; i < poblaciones.length; i++) { 
-            $("#poblacion").append("<option value='" + poblaciones[i].poblacion + "'>" + poblaciones[i].poblacion + "</option>");
+        if (models === 'error') {
+          load_models_v2(prov);
+        } else {
+          for (var i = 0; i < models.length; i++) {
+            $("#model")
+              .append("<option value='" + models[i].model + "'>" +
+                models[i].model + "</option>");
+          }
         }
-        }
-  })
-  .fail(function() {
-        load_poblaciones_v2(prov);
+      })
+    .fail(function() {
+      load_models_v2(prov);
     });
 }
-

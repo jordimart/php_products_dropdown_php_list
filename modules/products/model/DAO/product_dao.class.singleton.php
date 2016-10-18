@@ -60,39 +60,57 @@ class productDAO {
                   . " '$provider','$weight','$height','$width','$description','$status','$Any','$six_months','$one_year','$five_years','$eight_years','$avatar')";
 
         return $db->ejecutar($sql);
-        //return ("Estoy dentro del Dao");
+
     }
 
-//Añadido para cargar paises
-    public function obtain_provincias_DAO() {
+//Descargamos con curl los datos de la url y devolvemos el contenido
+
+public function obtain_paises_DAO($url) {
+            $ch = curl_init();
+            $timeout="";
+            curl_setopt ($ch, CURLOPT_URL, $url);
+            curl_setopt ($ch, CURLOPT_RETURNTRANSFER, 1);
+            curl_setopt ($ch, CURLOPT_CONNECTTIMEOUT, $timeout);
+            $file_contents = curl_exec($ch);
+            curl_close($ch);
+
+            return ($file_contents) ? $file_contents : FALSE;
+        }
+
+//Obtenemos marcas de un xml y devolvemos un array de nombres
+    public function obtain_trademarks_DAO() {
             $json = array();
             $tmp = array();
 
-            $provincias = simplexml_load_file("../resources/provinciasypoblaciones.xml");
-            $result = $provincias->xpath("/lista/provincia/nombre | /lista/provincia/@id");
+            $trademarks = simplexml_load_file("../resources/trademarks_and_models.xml");
+            $result = $trademarks->xpath("/list/trademark/name | /list/trademark/@id");
+
             for ($i=0; $i<count($result); $i+=2) {
                 $e=$i+1;
-                $provincia=$result[$e];
-                    
+                $trademark=$result[$e];
+
                 $tmp = array(
-                    'id' => (string) $result[$i], 'nombre' => (string) $provincia   
+                    'id' => (string) $result[$i], 'name' => (string) $trademark
                 );
+
                 array_push($json, $tmp);
             }
+
             return $json;
+
         }
-        
-        public function obtain_poblaciones_DAO($arrArgument) {
+
+        public function obtain_models_DAO($arrArgument) {
             $json = array();
             $tmp = array();
-        
+
             $filter = (string)$arrArgument;
-            $xml = simplexml_load_file('../resources/provinciasypoblaciones.xml');
-            $result = $xml->xpath("/lista/provincia[@id='$filter']/localidades");
-        
+            $xml = simplexml_load_file('../resources/trademarks_and_models.xml');
+            $result = $xml->xpath("/list/trademark[@id='$filter']/models");
+
             for ($i=0; $i<count($result[0]); $i++) {
                 $tmp = array(
-                    'poblacion' => (string) $result[0]->localidad[$i]   
+                    'model' => (string) $result[0]->model[$i]
                 );
                 array_push($json, $tmp);
             }

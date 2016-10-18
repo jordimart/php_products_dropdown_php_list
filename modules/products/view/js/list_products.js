@@ -37,7 +37,7 @@ function paint_product(json) {
   serial_number.innerHTML = "serial_number = ";
   serial_number.innerHTML += json.product.serial_number;
   var category = document.createElement("div");
-  category.innerHTML = "category = ";
+  category.innerHTML = "country = ";
   category.innerHTML += json.product.category;
   var trademark = document.createElement("div");
   trademark.innerHTML = "trademark = ";

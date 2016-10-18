@@ -24,17 +24,17 @@ class product_model {
         //return ("estoy en model");
     }
 
-//Añadio para cargar paises
+//Conectamos desde el modelo con el BLL y devolvemos la descarga
 public function obtain_paises($url) {
             return $this->bll->obtain_paises_BLL($url);
         }
-        
-        public function obtain_provincias() {
-            return $this->bll->obtain_provincias_BLL();
+//Conectamos desde el modelo con el BLL y devolvemos un array
+        public function obtain_trademarks() {
+            return $this->bll->obtain_trademarks_BLL();
         }
-        
-        public function obtain_poblaciones($arrArgument) {
-            return $this->bll->obtain_poblaciones_BLL($arrArgument);
+
+        public function obtain_models($arrArgument) {
+            return $this->bll->obtain_models_BLL($arrArgument);
         }
 
 

@@ -142,15 +142,15 @@ if ((isset($_GET["load_data"])) && ($_GET["load_data"] == true)) {
     }
 }
 
-/////////////////////////////////////////////////// load_pais
+//Utilizamos este paso para conectar con la url y conseguir la lista de paises o devolver un fallo
     if(  (isset($_GET["load_pais"])) && ($_GET["load_pais"] == true)  ){
         $json = array();
-        
+
         $url = 'http://www.oorsprong.org/websamples.countryinfo/CountryInfoService.wso/ListOfCountryNamesByName/JSON';
-        
-        $path_model=$_SERVER['DOCUMENT_ROOT'].'/24G dependent_combo_webservices/pages/model/model/';
-        $json = loadModel($path_model, "userModel", "obtain_paises", $url);
-        
+
+        $path_model=$_SERVER['DOCUMENT_ROOT'].'/modules/products/model/model/';
+        $json = loadModel($path_model, "product_model", "obtain_paises", $url);
+
         if($json){
             echo $json;
             exit;
@@ -160,40 +160,40 @@ if ((isset($_GET["load_data"])) && ($_GET["load_data"] == true)) {
             exit;
         }
     }
-    
-    /////////////////////////////////////////////////// load_provincias
-    if(  (isset($_GET["load_provincias"])) && ($_GET["load_provincias"] == true)  ){
+
+    ///Utilizamos esto para acceder a los datos xml de marcas
+    if(  (isset($_GET["load_trademark"])) && ($_GET["load_trademark"] == true)  ){
         $jsondata = array();
         $json = array();
-    
-        $path_model=$_SERVER['DOCUMENT_ROOT'].'/24G dependent_combo_webservices/pages/model/model/';
-        $json = loadModel($path_model, "userModel", "obtain_provincias");
-    
+
+        $path_model=$_SERVER['DOCUMENT_ROOT'].'/modules/products/model/model/';
+        $json = loadModel($path_model, "product_model", "obtain_trademarks");
+
         if($json){
-            $jsondata["provincias"] = $json;
+            $jsondata["trademarks"] = $json;
             echo json_encode($jsondata);
             exit;
         }else{
-            $jsondata["provincias"] = "error";
+            $jsondata["trademarks"] = "error";
             echo json_encode($jsondata);
             exit;
         }
     }
-    
+
     /////////////////////////////////////////////////// load_poblaciones
     if(  isset($_POST['idPoblac']) ){
         $jsondata = array();
         $json = array();
-    
-        $path_model=$_SERVER['DOCUMENT_ROOT'].'/24G dependent_combo_webservices/pages/model/model/';
-        $json = loadModel($path_model, "userModel", "obtain_poblaciones", $_POST['idPoblac']);
-    
+
+        $path_model=$_SERVER['DOCUMENT_ROOT'].'/modules/products/model/model/';
+        $json = loadModel($path_model, "product_model", "obtain_models", $_POST['idPoblac']);
+
         if($json){
-            $jsondata["poblaciones"] = $json;
+            $jsondata["models"] = $json;
             echo json_encode($jsondata);
             exit;
         }else{
-            $jsondata["poblaciones"] = "error";
+            $jsondata["models"] = "error";
             echo json_encode($jsondata);
             exit;
         }
