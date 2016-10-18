@@ -44,6 +44,7 @@ function alta_products() {
             'warranty' => ($result['data']['warranty']),
             'avatar' => $result_avatar['data']
         );
+        $_SESSION['result_avatar'] = array();
 
         //aquí insertaremos en base de datos
         //Para ello utilizo la funcion loadModel de la utilidad common.inc
@@ -83,7 +84,7 @@ function alta_products() {
         }
         header('HTTP/1.0 400 Bad error');
         echo json_encode($jsondata);
-        exit;
+       // exit;
     }
 }
 
@@ -140,3 +141,60 @@ if ((isset($_GET["load_data"])) && ($_GET["load_data"] == true)) {
         exit;
     }
 }
+
+/////////////////////////////////////////////////// load_pais
+    if(  (isset($_GET["load_pais"])) && ($_GET["load_pais"] == true)  ){
+        $json = array();
+        
+        $url = 'http://www.oorsprong.org/websamples.countryinfo/CountryInfoService.wso/ListOfCountryNamesByName/JSON';
+        
+        $path_model=$_SERVER['DOCUMENT_ROOT'].'/24G dependent_combo_webservices/pages/model/model/';
+        $json = loadModel($path_model, "userModel", "obtain_paises", $url);
+        
+        if($json){
+            echo $json;
+            exit;
+        }else{
+            $json = "error";
+            echo $json;
+            exit;
+        }
+    }
+    
+    /////////////////////////////////////////////////// load_provincias
+    if(  (isset($_GET["load_provincias"])) && ($_GET["load_provincias"] == true)  ){
+        $jsondata = array();
+        $json = array();
+    
+        $path_model=$_SERVER['DOCUMENT_ROOT'].'/24G dependent_combo_webservices/pages/model/model/';
+        $json = loadModel($path_model, "userModel", "obtain_provincias");
+    
+        if($json){
+            $jsondata["provincias"] = $json;
+            echo json_encode($jsondata);
+            exit;
+        }else{
+            $jsondata["provincias"] = "error";
+            echo json_encode($jsondata);
+            exit;
+        }
+    }
+    
+    /////////////////////////////////////////////////// load_poblaciones
+    if(  isset($_POST['idPoblac']) ){
+        $jsondata = array();
+        $json = array();
+    
+        $path_model=$_SERVER['DOCUMENT_ROOT'].'/24G dependent_combo_webservices/pages/model/model/';
+        $json = loadModel($path_model, "userModel", "obtain_poblaciones", $_POST['idPoblac']);
+    
+        if($json){
+            $jsondata["poblaciones"] = $json;
+            echo json_encode($jsondata);
+            exit;
+        }else{
+            $jsondata["poblaciones"] = "error";
+            echo json_encode($jsondata);
+            exit;
+        }
+    }

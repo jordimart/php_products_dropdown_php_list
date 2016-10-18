@@ -63,4 +63,40 @@ class productDAO {
         //return ("Estoy dentro del Dao");
     }
 
+//Añadido para cargar paises
+    public function obtain_provincias_DAO() {
+            $json = array();
+            $tmp = array();
+
+            $provincias = simplexml_load_file("../resources/provinciasypoblaciones.xml");
+            $result = $provincias->xpath("/lista/provincia/nombre | /lista/provincia/@id");
+            for ($i=0; $i<count($result); $i+=2) {
+                $e=$i+1;
+                $provincia=$result[$e];
+                    
+                $tmp = array(
+                    'id' => (string) $result[$i], 'nombre' => (string) $provincia   
+                );
+                array_push($json, $tmp);
+            }
+            return $json;
+        }
+        
+        public function obtain_poblaciones_DAO($arrArgument) {
+            $json = array();
+            $tmp = array();
+        
+            $filter = (string)$arrArgument;
+            $xml = simplexml_load_file('../resources/provinciasypoblaciones.xml');
+            $result = $xml->xpath("/lista/provincia[@id='$filter']/localidades");
+        
+            for ($i=0; $i<count($result[0]); $i++) {
+                $tmp = array(
+                    'poblacion' => (string) $result[0]->localidad[$i]   
+                );
+                array_push($json, $tmp);
+            }
+            return $json;
+        }
+
 }

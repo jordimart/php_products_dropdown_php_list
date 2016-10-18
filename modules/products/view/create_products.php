@@ -24,35 +24,21 @@
                     <br>
                     <!-- Select Basic -->
                     <label for="category" class="col-md-4 control-label">Tipo</label>
-                    <select id="category" name="category" class="form-control input-md">
-                        <option value="Photovoltaic">Photovoltaic</option>
-                        <option value="Off-grid">Off-grid</option>
-                        <option value="Estructure">Estructure</option>
-                        <option value="Elecectricity">Electricity</option>
+                    <select id="category"  class="form-control input-md">    
                     </select>
+                    <span id="e_category" class="styerror"></span>
                     <br>
                     <!-- Select Basic -->
                     <label for="trademark" class="col-md-4 control-label">Marca</label>
-                    <select id="trademark" name="trademark" class="form-control input-md">
-                        <option value="Sunways">Sunways</option>
-                        <option value="Solarmax">Solarmax</option>
-                        <option value="Kaco">Kaco</option>
-                        <option value="Victron">Victron</option>
-                        <option value="Sma">Sma</option>
-                        <option value="Outblack">OutBlack</option>
-                        <option value="Eixide">Eixide</option>
+                    <select id="trademark" class="form-control input-md">
+                        
                     </select>
+                    <span id="e_trademark" class="styerror"></span>
                     <br>
                     <!-- Select Basic -->
                     <label for="model" class="col-md-4 control-label">Modelo</label>
-                    <select id="model" name="model" class="form-control input-md">
-                        <option value="3000/24v">3000w/24v</option>
-                        <option value="NT6000">NT6000</option>
-                        <option value="NT4000">NT4000</option>
-                        <option value="NT2500">NT2500</option>
-                        <option value="C2500">C2500</option>
-                        <option value="C3500">C3500</option>
-                        <option value="C5000">C5000</option>
+                    <select id="model" class="form-control input-md">
+                        <span id="e_model" class="styerror"></span>
                     </select>
                     <br>
                     <!-- Datepicker-->
@@ -170,6 +156,9 @@
                     <br >
                     <br >
                     <br >
+                    <p>
+            <span id="e_avatar" class="styerror"></span>
+                   </p>
                     <div class="form-group" id="progress">
                         <div id="bar"></div>
                         <div id="percent">0%</div>
