@@ -209,11 +209,8 @@ $(document)
         if (response.product === "") {
           $("#serial_number").val('');
           $("#category").val('');
-          $("#trademark")
-            .val(''); // ojo sedebe cambiar si filtramos por base de
-          // datos
-          $("#model").val(''); // ojo sedebe cambiar si filtramos por base
-          // de datos
+          $("#trademark").val('');
+          $("#model").val('');
           $("#date_entry").val('');
           $("#date_exit").val('');
           $("#purchase_price").val('');
@@ -345,95 +342,84 @@ $(document)
           });
         }
       });
+
+    load_countries_v1(); // inicializamos paises
+    load_trademarks_v1(); // inicializamos marcas
+
+    $("#model").empty();
+    $("#model")
+      .append('<option value="" selected="selected">Select model</option>');
+    $("#model").prop('disabled', true);
+
+    $("#trademark")
+      .change(function() {
+        // alert("inicializo model");
+        //  console.log("inicializo model");
+        var trademark = $(this).val();
+        if (trademark > 0) {
+          load_models_v1(trademark);
+          $("#model").prop('disabled', false);
+        } else {
+          $("#model").prop('disabled', true);
+        }
+      });
+
+    // Cargamos estas funciones de javascript para que vaya validando
+    // mientras
+    // escribimos
+    var string_reg = /^[A-Za-z0-9- -.]{2,20}$/;
+    var date_reg =
+      /^(0[1-9]|[12][0-9]|3[01])[- \/.](0[1-9]|1[012])[- \/.](19|20)\d\d$/;
+    var price_reg = /^[1-9]\d{1,7}(?:\.\d{1,4})?$/;
+    var measure_reg = /^[0-9]\d{1,4}?$/;
+    var desc_reg = /^[A-Za-z0-9- -.]{2,80}$/;
+
+    $("#seral_number, #provider")
+      .keyup(function() {
+        if ($(this).val() != "" && string_reg.test($(this).val())) {
+          $(".error").fadeOut();
+          return false;
+        }
+      });
+
+    $("#date_entry", "#date_exit")
+      .keyup(function() {
+        if ($(this).val() != "" && date_reg.test($(this).val())) {
+          $(".error").fadeOut();
+          return false;
+        }
+      });
+
+    $("#purchase_price", "#sale_price")
+      .keyup(function() {
+        if ($(this).val() != "" && price_reg.test($(this).val())) {
+          $(".error").fadeOut();
+          return false;
+        }
+      });
+    $("#weight", "#height", "#width")
+      .keyup(function() {
+        if ($(this).val() != "" && measure_reg.test($(this).val())) {
+          $(".error").fadeOut();
+          return false;
+        }
+      });
+    $("#description")
+      .keyup(function() {
+        if ($(this).val() != "" && desc_reg.test($(this).val())) {
+          $(".error").fadeOut();
+          return false;
+        }
+      }); // fin del inicio
   });
-
-load_countries_v1(); // inicializamos paises
-load_trademarks_v1(); // inicializamos marcas
-$("#trademark")
-  .change(function() {
-    var trademark = $(this).val();
-    var model = $("#model");
-
-    if (trademark !== 'Select trademark') {
-      model.prop('disabled', false);
-      load_models_v1(trademark);
-
-    } else {
-      model.prop('disabled', true);
-      $("#model").empty();
-    } // fi else
-  });
-
-/*$("#trademark")
-  .change(function() {
-    var prov = $(this).val();
-    if (prov > 0) {
-      load_models_v1(prov);
-    } else {
-      $("#model").prop('disabled', false);
-    }
-  });*/
-
-$("#model").empty();
-$("#model")
-  .append('<option value="" selected="selected">Select model</option>');
-$("#model").prop('disabled', true);
-
-// Cargamos estas funciones de javascript para que vaya validando mientras
-// escribimos
-var string_reg = /^[A-Za-z0-9- -.]{2,20}$/;
-var date_reg =
-  /^(0[1-9]|[12][0-9]|3[01])[- \/.](0[1-9]|1[012])[- \/.](19|20)\d\d$/;
-var price_reg = /^[1-9]\d{1,7}(?:\.\d{1,4})?$/;
-var measure_reg = /^[0-9]\d{1,4}?$/;
-var desc_reg = /^[A-Za-z0-9- -.]{2,80}$/;
-
-$("#seral_number, #provider")
-  .keyup(function() {
-    if ($(this).val() != "" && string_reg.test($(this).val())) {
-      $(".error").fadeOut();
-      return false;
-    }
-  });
-
-$("#date_entry", "#date_exit")
-  .keyup(function() {
-    if ($(this).val() != "" && date_reg.test($(this).val())) {
-      $(".error").fadeOut();
-      return false;
-    }
-  });
-
-$("#purchase_price", "#sale_price")
-  .keyup(function() {
-    if ($(this).val() != "" && price_reg.test($(this).val())) {
-      $(".error").fadeOut();
-      return false;
-    }
-  });
-$("#weight", "#height", "#width")
-  .keyup(function() {
-    if ($(this).val() != "" && measure_reg.test($(this).val())) {
-      $(".error").fadeOut();
-      return false;
-    }
-  });
-$("#description")
-  .keyup(function() {
-    if ($(this).val() != "" && desc_reg.test($(this).val())) {
-      $(".error").fadeOut();
-      return false;
-    }
-  }); // fin del inicio
-
 // Funcion validate
 function validate_products() {
   // Recogemos datos
   var result = true;
   var serial_number = document.getElementById('serial_number').value;
   var category = $('#category').val();
-  var trademark = $('trademark').val();
-  var model = $('model').val();
+  var trademark = $('#trademark').val();
+  var model = $('#model').val();
   var date_entry = document.getElementById('date_entry').value;
   var date_exit = document.getElementById('date_exit').value;
   var purchase_price = document.getElementById('purchase_price').value;
@@ -654,11 +640,7 @@ function validate_products() {
     $.post('modules/products/controller/controller_products.class.php', {
           alta_products_json: data_products_JSON
         },
-
         function(response) {
-          // console.log(response);
-          // console.log(response.products);
-
           if (response.success) {
             window.location.href = response.redirect;
           }
@@ -690,6 +672,25 @@ function validate_products() {
           .focus()
           .after("<span  class='error1'>" +
             xhr.responseJSON.error.serial_number + "</span>");
+
+        if (xhr.responseJSON !== undefined && xhr.responseJSON !== null) {
+          if (xhr.responseJSON.error.category !== undefined &&
+            xhr.responseJSON.error.category !== null) {
+            $("#e_category").text(xhr.responseJSON.error.category);
+          }
+        }
+        if (xhr.responseJSON !== undefined && xhr.responseJSON !== null) {
+          if (xhr.responseJSON.error.trademark !== undefined &&
+            xhr.responseJSON.error.trademark !== null) {
+            $("#e_trademark").text(xhr.responseJSON.error.trademark);
+          }
+        }
+        if (xhr.responseJSON !== undefined && xhr.responseJSON !== null) {
+          if (xhr.responseJSON.error.model !== undefined &&
+            xhr.responseJSON.error.model !== null) {
+            $("#e_model").text(xhr.responseJSON.error.model);
+          }
+        }
         if (xhr.responseJSON.error.date_entry)
           $("#date_entry")
           .focus()
@@ -764,57 +765,9 @@ function validate_products() {
   }
 }
 
-/*load_countries_v1();
-// load_trademark_v1();
-$("#trademark").empty();
-$("#trademark")
-  .append('<option value="" selected="selected">Select trademark</option>');
-$("#trademark").prop('disabled', true);
-$("#model").empty();
-$("#model")
-  .append('<option value="" selected="selected">Select model</option>');
-$("#model").prop('disabled', true);*/
-
-/// rectificat
-
-/*$("#trademark")
-  .change(function() {
-    var trademark = $(this).val();
-    var model = $("#model");
-
-    if (trademark !== 'Select trademark') {
-      model.prop('disabled', false);
-      load_models_v1();
-
-    } else {
-      model.prop('disabled', true);
-      $("#model").empty();
-    } // fi else
-  });*/
-
-// No me haria falta esta funcion
-
-/*$("#trademark")
-  .change(function() {
-    var prov = $(this).val();
-    var model = $("#model");
-    if (prov === 'Select trademark') {
-      model.prop('disabled', true);
-      $("#model").empty();
-    } else {
-      model.prop('disabled', false);
-      load_trademark_v1(); // utiliza load provincias ahora trademark
-    } // fi else
-
-    if (prov > 0) {
-      load_model_v1(prov); // antes era poblaciones
-    } else {
-      $("#model").prop('disabled', false);
-    }
-  });*/
-
 // Segundo metodo de recoger datos en caso de que falle la url
 function load_countries_v2(cad) {
+  // console.log(data);
   $.getJSON(cad, function(data) {
     $("#category").empty();
     $("#category")
@@ -887,14 +840,10 @@ function load_trademarks_v1() { // provinciasypoblaciones.xml - xpath
           .append(
             '<option value="" selected="selected">Select trademark</option>');
 
-        // alert(response);
         var json = JSON.parse(response); // resposta del servidor
         var trademarks = json.trademarks;
-        // alert(trademarks);
+        alert(trademarks);
         // console.log(trademarks);
-
-        // alert(trademarks[0].id);
-        // alert(trademarks[0].name);
 
         if (trademarks === 'error') {
           load_trademarks_v2();
