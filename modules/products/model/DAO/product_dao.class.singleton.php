@@ -52,7 +52,6 @@ class productDAO {
                 $eight_years = 1;
         }
 
-
         $sql = "INSERT INTO products(serial_number, category, trademark, model,"
                   . " date_entry, date_exit,purchase_price,sale_price,provider,weight,height,"
                   . " width,description,status,Any,6_months,1_year,5_years,8_years,avatar)"
@@ -60,11 +59,8 @@ class productDAO {
                   . " '$provider','$weight','$height','$width','$description','$status','$Any','$six_months','$one_year','$five_years','$eight_years','$avatar')";
 
         return $db->ejecutar($sql);
-
     }
-
 //Descargamos con curl los datos de la url y devolvemos el contenido
-
 public function obtain_paises_DAO($url) {
             $ch = curl_init();
             $timeout="";
@@ -97,7 +93,6 @@ public function obtain_paises_DAO($url) {
             }
 
             return $json;
-
         }
 
         public function obtain_models_DAO($arrArgument) {
@@ -116,5 +111,19 @@ public function obtain_paises_DAO($url) {
             }
             return $json;
         }
+
+        public function list_products_DAO($db) {
+        $sql = "SELECT * FROM products";
+        $stmt = $db->ejecutar($sql);
+        return $db->listar($stmt);
+
+    }
+
+    public function details_products_DAO($db,$id) {
+        $sql = "SELECT * FROM products WHERE serial_number=".$id;
+        $stmt = $db->ejecutar($sql);
+        return $db->listar($stmt);
+
+    }
 
 }

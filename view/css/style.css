@@ -1914,3 +1914,70 @@ float:right;
 text-align: center;
 font-weight:bold;
 }
+
+
+/*****************PRODUCTS****************/
+#prod {
+    display:inline-block;
+    margin: 8px;
+    margin-bottom: 5px;
+    width: 350px;
+    height: 350px;
+    text-align: left;
+}
+
+#prod p {
+    display: inline-block;
+    font-weight: bold;
+    color:black;
+}
+
+#p2{
+    float:right;
+    font-size:  18pt;
+    margin-right: 30px;
+    color:red;
+}
+
+
+#prod:hover {
+    border:1px solid gray;
+}
+
+.prodImg {
+    display:block;
+    width: 100%;
+    height: 70%;
+}
+
+#details {
+    display: table;
+    width: 70%;
+    border:1px solid black;
+    border-radius: 9px;
+    background-color: #f5f1e6;
+}
+
+
+#details img {
+    display: table-cell;
+    width: 350px;
+    height: 350px;
+}
+#container {
+    display: table-cell;
+    width: 350px;
+    height: 350px;
+    vertical-align: top;
+}
+
+/**BREADCRUMB*/
+#list_prod ol li {
+    font-size: 30pt;
+    font-weight: bold;
+}
+
+#details_prod ol li {
+    font-size: 30pt;
+    font-weight: bold;
+}

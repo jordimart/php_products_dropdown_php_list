@@ -5,11 +5,15 @@
                 <li class= <?php if($_GET['module'] == "main"){
                         echo "active";}else{ echo "";} ?> >
                         <a href="index.php?module=main">Home</a>
-               </li>
-                <li class= <?php if($_GET['module'] == "products"){
+                      </li>
+                <!-- <li class= <?php if($_GET['module'] == "products"){
                         echo "active";}else{ echo "";} ?> >
                         <a href="index.php?module=products&view=create_products">Products</a>
-                  </li>
+                      </li>-->
+                  <li class= <?php if($_GET['module'] == "products"){
+                          echo "active";}else{ echo "";} ?> >
+                          <a href="index.php?module=products">List_products</a>
+                        </li>
                 <li class= <?php if($_GET['module'] == "contact"){
                         echo "active";}else{ echo "";} ?> >
                         <a href="index.php?module=contact">Contact</a>
