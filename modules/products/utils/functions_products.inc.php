@@ -8,7 +8,6 @@ function validate_products($value) {
     $error = array();
     $ok = true;
 
-
     $filter = array(
         'serial_number' => array(
             'filter' => FILTER_VALIDATE_REGEXP,
@@ -63,20 +62,20 @@ function validate_products($value) {
         $result['status'] = $value['status'];
         $result['warranty'] = $value['warranty'];
 
-      /*  if ($_POST['category'] === ' ') {
-            $error['category'] = "You haven't select category";
+        if ($_POST['category'] === ' ') {
+            $error['category'] = "You haven't select pais php";
             $ok = false;
-        }*/ ///este campo nuca se validará sera el inicio de la consulta
+        }
 
         //Este campo puede estar vacio si se realiza mal la consulta
         if ($_POST['trademark'] === ' ') {
-            $error['trademark'] = "You haven't select trademark ";
+            $error['trademark'] = "You haven't select trademark php";
             $ok = false;
         }
 
         //Este campo puede estar vacio si se realiza mal la consulta
         if ($_POST['model'] === ' ') {
-            $error['model'] = "You haven't select model ";
+            $error['model'] = "You haven't select model php";
             $ok = false;
         }
 
@@ -106,7 +105,7 @@ function validate_products($value) {
             $ok = false;
         }
 
-        if ($result != null && $result) {
+        //if ($result != null && $result) {
 
                 //error message for serial number
                 if (!$result['serial_number']) {
@@ -169,30 +168,25 @@ function validate_products($value) {
                       $ok = false;
                   }
               }
-    };
+    //};
     return $return = array('result' => $ok, 'error' => $error, 'data' => $result);
 
 
-}
+};
 
 // validate date entry
 function ok_entry($date) {
 
     $date_today = date("d-m-Y");
-
     if (is_string($date_today)) {
         $date_today = strtotime($date_today);
     }
-
     if (is_string($date)) {
         $date = strtotime($date);
     }
-
     if ($date > $date_today) {
-
         return false;
     }
-
     return true;
 }
 
@@ -201,14 +195,10 @@ function compare_dates($date_entry, $date_exit) {
     if (is_string($date_entry)) {
         $date_entry = strtotime($date_entry);
     }
-
     if (is_string($date_exit)) {
         $date_exit = strtotime($date_exit);
     }
-
-
     if ($date_entry > $date_exit) {
-
         return false;
     }
     return true;

@@ -2,7 +2,7 @@
 jQuery.fn.fill_or_clean = function() {
   this.each(function() {
 
-    if ($("#serial_number").attr("value") == "") {
+    if ($("#serial_number").attr("value") === "") {
       $("#serial_number").attr("value", "Input serial number");
       $("#serial_number")
         .focus(function() {
@@ -14,12 +14,12 @@ jQuery.fn.fill_or_clean = function() {
     }
     $("#serial_number")
       .blur(function() { // Onblur se activa cuando el usuario retira el foco
-        if ($("#serial_number").attr("value") == "") {
+        if ($("#serial_number").attr("value") === "") {
           $("#serial_number").attr("value", "Input serial number");
         }
       });
 
-    if ($("#date_entry").attr("value") == "") {
+    if ($("#date_entry").attr("value") === "") {
       $("#date_entry").attr("value", "Input date entry");
       $("#date_entry")
         .focus(function() {
@@ -30,11 +30,11 @@ jQuery.fn.fill_or_clean = function() {
     }
     $("#date_entry")
       .blur(function() {
-        if ($("#date_entry").attr("value") == "") {
+        if ($("#date_entry").attr("value") === "") {
           $("#date_entry").attr("value", "Input date entry");
         }
       });
-    if ($("#date_exit").attr("value") == "") {
+    if ($("#date_exit").attr("value") === "") {
       $("#date_exit").attr("value", "Input date exit");
       $("#date_exit")
         .focus(function() {
@@ -45,11 +45,11 @@ jQuery.fn.fill_or_clean = function() {
     }
     $("#date_exit")
       .blur(function() {
-        if ($("#date_exit").attr("value") == "") {
+        if ($("#date_exit").attr("value") === "") {
           $("#date_exit").attr("value", "Input date exit");
         }
       });
-    if ($("#purchase_price").attr("value") == "") {
+    if ($("#purchase_price").attr("value") === "") {
       $("#purchase_price").attr("value", "Input purchase price");
       $("#purchase_price")
         .focus(function() {
@@ -61,11 +61,11 @@ jQuery.fn.fill_or_clean = function() {
     }
     $("#purchase_price")
       .blur(function() {
-        if ($("#purchase_price").attr("value") == "") {
+        if ($("#purchase_price").attr("value") === "") {
           $("#purchase_price").attr("value", "Input purchase price");
         }
       });
-    if ($("#sale_price").attr("value") == "") {
+    if ($("#sale_price").attr("value") === "") {
       $("#sale_price").attr("value", "Input sale price");
       $("#sale_price")
         .focus(function() {
@@ -76,11 +76,11 @@ jQuery.fn.fill_or_clean = function() {
     }
     $("#sale_price")
       .blur(function() {
-        if ($("#sale_price").attr("value") == "") {
+        if ($("#sale_price").attr("value") === "") {
           $("#sale_price").attr("value", "Input sale price");
         }
       });
-    if ($("#provider").attr("value") == "") {
+    if ($("#provider").attr("value") === "") {
       $("#provider").attr("value", "Input provider");
       $("#provider")
         .focus(function() {
@@ -91,11 +91,11 @@ jQuery.fn.fill_or_clean = function() {
     }
     $("#provider")
       .blur(function() {
-        if ($("#provider").attr("value") == "") {
+        if ($("#provider").attr("value") === "") {
           $("#provider").attr("value", "Input provider");
         }
       });
-    if ($("#weight").attr("value") == "") {
+    if ($("#weight").attr("value") === "") {
       $("#weight").attr("value", "Input weight");
       $("#weight")
         .focus(function() {
@@ -106,11 +106,11 @@ jQuery.fn.fill_or_clean = function() {
     }
     $("#weight")
       .blur(function() {
-        if ($("#weight").attr("value") == "") {
+        if ($("#weight").attr("value") === "") {
           $("#weight").attr("value", "Input weight");
         }
       });
-    if ($("#height").attr("value") == "") {
+    if ($("#height").attr("value") === "") {
       $("#height").attr("value", "Input height");
       $("#height")
         .focus(function() {
@@ -121,11 +121,11 @@ jQuery.fn.fill_or_clean = function() {
     }
     $("#height")
       .blur(function() {
-        if ($("#height").attr("value") == "") {
+        if ($("#height").attr("value") === "") {
           $("#height").attr("value", "Input height");
         }
       });
-    if ($("#width").attr("value") == "") {
+    if ($("#width").attr("value") === "") {
       $("#width").attr("value", "Input width");
       $("#width")
         .focus(function() {
@@ -136,11 +136,11 @@ jQuery.fn.fill_or_clean = function() {
     }
     $("#width")
       .blur(function() {
-        if ($("#width").attr("value") == "") {
+        if ($("#width").attr("value") === "") {
           $("#width").attr("value", "Input width");
         }
       });
-    if ($("#description").attr("value") == "") {
+    if ($("#description").attr("value") === "") {
       $("#description").attr("value", "Input description");
       $("#description")
         .focus(function() {
@@ -151,7 +151,7 @@ jQuery.fn.fill_or_clean = function() {
     }
     $("#description")
       .blur(function() {
-        if ($("#description").attr("value") == "") {
+        if ($("#description").attr("value") === "") {
           $("#description").attr("value", "Input description");
         }
       });
@@ -170,14 +170,12 @@ $(document)
     $(function() {
       $('#date_entry')
         .datepicker({
-
           changeMonth: true,
           changeYear: true,
           defaultDate: 'today',
           maxDate: 'today',
           yearRange: '1900:2016',
           dateFormat: 'dd-mm-yy',
-
         });
     });
 
@@ -185,12 +183,10 @@ $(document)
     $(function() {
       $('#date_exit')
         .datepicker({
-
           changeMonth: true,
           changeYear: true,
           yearRange: '1900:2016',
           dateFormat: 'dd-mm-yy',
-
         });
     });
 
@@ -199,7 +195,6 @@ $(document)
       .click(function() {
         validate_products(); // función que utilizamos
       });
-
     // Control de seguridad para evitar que al volver atrás de la pantalla
     // results a create, no nos imprima los datos
     $.get(
@@ -324,18 +319,18 @@ $(document)
               var json = data;
               if (json.res === true) {
                 var element;
-                if ((element = file.previewElement) != null) {
+                if ((element = file.previewElement) !== null) {
                   element.parentNode.removeChild(file.previewElement);
 
                 } else {
-                  false;
+                  return false;
                 }
               } else { // json.res == false, elimino la imagen también
                 var element;
-                if ((element = file.previewElement) != null) {
+                if ((element = file.previewElement) !== null) {
                   element.parentNode.removeChild(file.previewElement);
                 } else {
-                  false;
+                  return false;
                 }
               }
             }
@@ -345,20 +340,17 @@ $(document)
 
     load_countries_v1(); // inicializamos paises
     load_trademarks_v1(); // inicializamos marcas
-
-    $("#model").empty();
+    $("#model").empty(); // inicio model a vacio y a predeterminado
     $("#model")
       .append('<option value="" selected="selected">Select model</option>');
     $("#model").prop('disabled', true);
-
     $("#trademark")
-      .change(function() {
-        // alert("inicializo model");
-        //  console.log("inicializo model");
+      .change(function() { // si hay evento en trademark contamos elementos
+        // y cargamos model
         var trademark = $(this).val();
         if (trademark > 0) {
           load_models_v1(trademark);
-          $("#model").prop('disabled', false);
+          $("#model").prop('disabled', false); // activamos combox
         } else {
           $("#model").prop('disabled', true);
         }
@@ -376,7 +368,7 @@ $(document)
 
     $("#seral_number, #provider")
       .keyup(function() {
-        if ($(this).val() != "" && string_reg.test($(this).val())) {
+        if ($(this).val() !== "" && string_reg.test($(this).val())) {
           $(".error").fadeOut();
           return false;
         }
@@ -384,7 +376,7 @@ $(document)
 
     $("#date_entry", "#date_exit")
       .keyup(function() {
-        if ($(this).val() != "" && date_reg.test($(this).val())) {
+        if ($(this).val() !== "" && date_reg.test($(this).val())) {
           $(".error").fadeOut();
           return false;
         }
@@ -392,21 +384,21 @@ $(document)
 
     $("#purchase_price", "#sale_price")
       .keyup(function() {
-        if ($(this).val() != "" && price_reg.test($(this).val())) {
+        if ($(this).val() !== "" && price_reg.test($(this).val())) {
           $(".error").fadeOut();
           return false;
         }
       });
     $("#weight", "#height", "#width")
       .keyup(function() {
-        if ($(this).val() != "" && measure_reg.test($(this).val())) {
+        if ($(this).val() !== "" && measure_reg.test($(this).val())) {
           $(".error").fadeOut();
           return false;
         }
       });
     $("#description")
       .keyup(function() {
-        if ($(this).val() != "" && desc_reg.test($(this).val())) {
+        if ($(this).val() !== "" && desc_reg.test($(this).val())) {
           $(".error").fadeOut();
           return false;
         }
@@ -460,8 +452,8 @@ function validate_products() {
 
   $(".error").remove(); // quito error si hay
   // si esta vacio o esta el error
-  if ($("#serial_number").val() == "" ||
-    $("#serial_number").val() == "Entry serial number js") {
+  if ($("#serial_number").val() === "" ||
+    $("#serial_number").val() === "Entry serial number js") {
     $("#serial_number")
       .focus()
       .after("<span class='error'>Entry serial number js</span>");
@@ -475,8 +467,31 @@ function validate_products() {
     result = false;
     return false;
   }
+  if ($("#category").val() === "" ||
+    $("#category").val() == "Selecciona un Pais") {
+    $("#category")
+      .focus()
+      .after("<span class='error'>Please entry a country js</span>");
+    result = false;
+    return false;
+  }
+  if ($("#trademark").val() === "" ||
+    $("#trademark").val() == "Select trademark") {
+    $("#trademark")
+      .focus()
+      .after("<span class='error'>Please entry a country js</span>");
+    result = false;
+    return false;
+  }
+  if ($("#model").val() === "" || $("#model").val() == "Select model") {
+    $("#model")
+      .focus()
+      .after("<span class='error'>Please entry a country js</span>");
+    result = false;
+    return false;
+  }
 
-  if ($("#date_entry").val() == "" ||
+  if ($("#date_entry").val() === "" ||
     $("#date_entry").val() == "Entry date entry js") {
     $("#date_entry")
       .focus()
@@ -491,7 +506,7 @@ function validate_products() {
     return false;
   }
 
-  if ($("#date_exit").val() == "" ||
+  if ($("#date_exit").val() === "" ||
     $("#date_exit").val() == "Entry date of birth") {
     $("#date_exit")
       .focus()
@@ -504,7 +519,7 @@ function validate_products() {
       .after("<span class='error'>error format date (dd-mm-yyyy) js</span>");
     result = false;
     return false;
-  } else if ($("#purchase_price").val() == "" ||
+  } else if ($("#purchase_price").val() === "" ||
     $("#purchase_price").val() == "Input purchase price js") {
     $("#purchase_price")
       .focus()
@@ -521,7 +536,7 @@ function validate_products() {
     return false;
   }
 
-  if ($("#sale_price").val() == "" ||
+  if ($("#sale_price").val() === "" ||
     $("#sale_price").val() == "Input sale price") {
     $("#sale_price")
       .focus()
@@ -538,7 +553,7 @@ function validate_products() {
     return false;
   }
 
-  if ($("#provider").val() == "" ||
+  if ($("#provider").val() === "" ||
     $("#provider").val() == "Input provider js") {
     $("#provider")
       .focus()
@@ -555,7 +570,7 @@ function validate_products() {
     return false;
   }
 
-  if ($("#weight").val() == "" || $("#weight").val() == "Input weight js") {
+  if ($("#weight").val() === "" || $("#weight").val() == "Input weight js") {
     $("#weight").focus().after("<span class='error'>Input weight js</span>");
     result = false;
     return false;
@@ -569,7 +584,7 @@ function validate_products() {
     return false;
   }
 
-  if ($("#height").val() == "" || $("#height").val() == "Input height js") {
+  if ($("#height").val() === "" || $("#height").val() == "Input height js") {
     $("#height").focus().after("<span class='error'>Input height js</span>");
     result = false;
     return false;
@@ -583,7 +598,7 @@ function validate_products() {
     return false;
   }
 
-  if ($("#width").val() == "" || $("#width").val() == "Input width js") {
+  if ($("#width").val() === "" || $("#width").val() == "Input width js") {
     $("#width").focus().after("<span class='error'>Input width js</span>");
     result = false;
     return false;
@@ -597,7 +612,7 @@ function validate_products() {
     return false;
   }
 
-  if ($("#description").val() == "" ||
+  if ($("#description").val() === "" ||
     $("#description").val() == "Input description js") {
     $("#description")
       .focus()
@@ -664,7 +679,7 @@ function validate_products() {
         } else {
           alert('Uncaught Error: ' + xhr.responseText);
         }
-        if (xhr.responseJSON == 'undefined' && xhr.responseJSON == null)
+        if (xhr.responseJSON == 'undefined' && xhr.responseJSON === null)
           xhr.responseJSON = JSON.parse(xhr.responseText);
 
         if (xhr.responseJSON.error.serial_number)
@@ -791,15 +806,10 @@ function load_countries_v1() {
   $.get(
       "modules/products/controller/controller_products.class.php?load_pais=true",
       function(response) {
-        // console.log(response);
-        // console.log("respuesta de paises");
         if (response === 'error') {
-          // console.log("he entrado en error en js");
           load_countries_v2("resources/ListOfCountryNamesByName.json");
         } else {
-          // console.log("he entrado en error else en js");
           load_countries_v2(
-
             "modules/products/controller/controller_products.class.php?load_pais=true"
           ); // oorsprong.org
         }
@@ -817,7 +827,6 @@ function load_trademarks_v2() {
     $("#trademark")
       .append(
         '<option value="" selected="selected">Select trademark</option>');
-
     $(xml)
       .find("trademark")
       .each(function() {
@@ -839,12 +848,8 @@ function load_trademarks_v1() { // provinciasypoblaciones.xml - xpath
         $("#trademark")
           .append(
             '<option value="" selected="selected">Select trademark</option>');
-
         var json = JSON.parse(response); // resposta del servidor
         var trademarks = json.trademarks;
-        alert(trademarks);
-        // console.log(trademarks);
-
         if (trademarks === 'error') {
           load_trademarks_v2();
         } else {
@@ -865,7 +870,6 @@ function load_models_v2(prov) {
     $("#model").empty();
     $("#model")
       .append('<option value="" selected="selected">Select model</option>');
-
     $(xml)
       .find('trademark[id=' + prov + ']')
       .each(function() {
@@ -889,18 +893,12 @@ function load_models_v1(prov) { // provinciasypoblaciones.xml - xpath
   $.post(
       "modules/products/controller/controller_products.class.php", datos,
       function(response) {
-        // alert(response);
         var json = JSON.parse(response);
         var models = json.models;
-        // alert(poblaciones);
-        // console.log(poblaciones);
-        // alert(poblaciones[0].poblacion);
-
         $("#model").empty();
         $("#model")
           .append(
             '<option value="" selected="selected">Select model</option>');
-
         if (models === 'error') {
           load_models_v2(prov);
         } else {

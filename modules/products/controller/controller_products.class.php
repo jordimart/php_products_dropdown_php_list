@@ -15,8 +15,7 @@ function alta_products() {
     $productsJSON = json_decode($_POST["alta_products_json"], true);
 
     $result = validate_products($productsJSON);
-    //echo json_encode($result);
-    //exit;
+
 //si no hay avatar pone la ruta de default
     if (empty($_SESSION['result_avatar'])) {
         $_SESSION['result_avatar'] = array('result' => true, 'error' => "", 'data' => '/media/default-avatar.png');
@@ -52,14 +51,12 @@ function alta_products() {
         $path_model = $_SERVER['DOCUMENT_ROOT'] . '/modules/products/model/model/';
         //llamamos al modelo produts y a crear
         $arrValue = loadModel($path_model, "product_model", "create_product", $arrArgument);
-        //echo json_encode($arrValue);
-        //exit();
+
         if ($arrValue){
                     $mensaje = "Su registro se ha efectuado correctamente, para finalizar compruebe que ha recibido un correo de validacion y siga sus instrucciones";
                 }else{
                     $mensaje = "No se ha podido realizar su alta. Intentelo mas tarde";
                  }
-        //$mensaje = "Product has been successfully registered";
 
         //redirigir a otra p�gina con los datos de $arrArgument y $mensaje
         $_SESSION['product'] = $arrArgument;
@@ -93,7 +90,6 @@ if ((isset($_GET["upload"])) && ($_GET["upload"] == true)) {
     $result_avatar = upload_files();
     $_SESSION['result_avatar'] = $result_avatar;
 }
-
 
 if (isset($_GET["delete"]) && $_GET["delete"] == true) {
     $_SESSION['result_avatar'] = array();
@@ -130,7 +126,6 @@ function close_session() {
 if ((isset($_GET["load_data"])) && ($_GET["load_data"] == true)) {
 
     $jsondata = array();
-
     if (isset($_SESSION['product'])) {
         $jsondata["product"] = $_SESSION['product'];
         echo json_encode($jsondata);
@@ -147,7 +142,6 @@ if ((isset($_GET["load_data"])) && ($_GET["load_data"] == true)) {
         $json = array();
 
         $url = 'http://www.oorsprong.org/websamples.countryinfo/CountryInfoService.wso/ListOfCountryNamesByName/JSON';
-
         $path_model=$_SERVER['DOCUMENT_ROOT'].'/modules/products/model/model/';
         $json = loadModel($path_model, "product_model", "obtain_paises", $url);
 

@@ -13,9 +13,9 @@ function load_product_ajax() {
 
     })
     .fail(function(xhr) {
-      alert(xhr.responseText);
+
     });
-};
+}
 
 $(document)
   .ready(function() {
