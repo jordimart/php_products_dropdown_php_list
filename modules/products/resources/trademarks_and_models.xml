@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <list>
-	<trademark id="01">
+	<trademark id="Kaco">
 		<name><![CDATA[Kaco]]></name>
 		<models>
 			<model c="0"><![CDATA[3500xi]]></model>
@@ -11,7 +11,7 @@
 			<model c="0"><![CDATA[35000xi]]></model>
 		</models>
 	</trademark>
-	<trademark id="02">
+	<trademark id="Solarmax">
 		<name><![CDATA[Solarmax]]></name>
 		<models>
 			<model c="0"><![CDATA[c2500]]></model>
@@ -22,7 +22,7 @@
 			<model c="0"><![CDATA[c100]]></model>
 		</models>
 	</trademark>
-	<trademark id="03">
+	<trademark id="Sunways">
 		<name><![CDATA[Sunways]]></name>
 		<models>
 			<model c="0"><![CDATA[NT2500]]></model>
@@ -33,7 +33,7 @@
 			<model c="0"><![CDATA[PT30]]></model>
 		</models>
 	</trademark>
-	<trademark id="04">
+	<trademark id="Power">
 		<name><![CDATA[Power]]></name>
 		<models>
 			<model c="0"><![CDATA[LTV20]]></model>

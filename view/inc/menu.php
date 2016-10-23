@@ -6,10 +6,10 @@
                         echo "active";}else{ echo "";} ?> >
                         <a href="index.php?module=main">Home</a>
                       </li>
-                <!-- <li class= <?php if($_GET['module'] == "products"){
+                 <li class= <?php if($_GET['module'] == "products"){
                         echo "active";}else{ echo "";} ?> >
                         <a href="index.php?module=products&view=create_products">Products</a>
-                      </li>-->
+                      </li>
                   <li class= <?php if($_GET['module'] == "products"){
                           echo "active";}else{ echo "";} ?> >
                           <a href="index.php?module=products">List_products</a>

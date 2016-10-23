@@ -1,20 +1,4 @@
 <?php
-/*Funciones de prueba de comunicacion*/
-/*function upload_files() {
-  $jsondata["success"] = true;
-  $jsondata["redirect2"] = "hola he comunicado con upload";
-  echo json_encode($jsondata);
-  exit;
-
-
-}
-
-function remove_files(){
-  $jsondata["success"] = true;
-  $jsondata["redirect3"] = "hola he comunicado con delete";
-  echo json_encode($jsondata);
-  exit;
-}*/
 
   //utilizar $_FILES['file'] no $_FILES['avatar'] por dropzone.js
 function upload_files() {
@@ -50,7 +34,7 @@ function upload_files() {
     //}
 
     ////////////////////////////////////////////////////////////////////////////
-    if ($_FILES['file']['size'] > 55000 ){
+    if ($_FILES['file']['size'] > 500000 ){
         $error .=  "Large File Size <br>";
     }
 
@@ -72,8 +56,8 @@ function upload_files() {
         }
         ////////////////////////////////////////////////////////////////////////////
         list($width, $height, $type, $attr) = @getimagesize($_FILES['file']['tmp_name']);
-        if ($width > 150 || $height > 150){
-            $error .=   "Maximum width and height exceeded. Please upload images below 100x100 px size <br>";
+        if ($width > 800 || $height > 800){
+            $error .=   "Maximum width and height exceeded. Please upload images below 800x800 px size <br>";
         }
     }
         /*
@@ -123,7 +107,7 @@ function upload_files() {
 }
 
 function remove_files(){
-  
+
 
 	if(file_exists($_SERVER['DOCUMENT_ROOT'].'/media/'.$_SESSION['nombreFichero'])){
 		unlink($_SERVER['DOCUMENT_ROOT'].'/media/'.$_SESSION['nombreFichero']);

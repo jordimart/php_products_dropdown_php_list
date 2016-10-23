@@ -278,7 +278,7 @@ $(document)
       .dropzone({
         url: "modules/products/controller/controller_products.class.php?upload=true",
         addRemoveLinks: true,
-        maxFileSize: 1000,
+        maxFileSize: 2000,
         dictResponseError: "Ha ocurrido un error en el server",
         acceptedFiles: 'image/*,.jpeg,.jpg,.png,.gif,.JPEG,.JPG,.PNG,.GIF,.rar,application/pdf,.psd',
         init: function() {
@@ -348,7 +348,8 @@ $(document)
       .change(function() { // si hay evento en trademark contamos elementos
         // y cargamos model
         var trademark = $(this).val();
-        if (trademark > 0) {
+        // console.log(trademark);
+        if ((trademark !== "") || (trademark !== "Select trademark")) {
           load_models_v1(trademark);
           $("#model").prop('disabled', false); // activamos combox
         } else {
@@ -791,7 +792,7 @@ function load_countries_v2(cad) {
 
     $.each(data, function(i, valor) {
       $("#category")
-        .append("<option value='" + valor.sISOCode + "'>" + valor.sName +
+        .append("<option value='" + valor.sName + "'>" + valor.sName +
           "</option>");
     });
   }).fail(function() {
@@ -855,7 +856,7 @@ function load_trademarks_v1() { // provinciasypoblaciones.xml - xpath
         } else {
           for (var i = 0; i < trademarks.length; i++) {
             $("#trademark")
-              .append("<option value='" + trademarks[i].id + "'>" +
+              .append("<option value='" + trademarks[i].name + "'>" +
                 trademarks[i].name + "</option>");
           }
         }
@@ -865,13 +866,13 @@ function load_trademarks_v1() { // provinciasypoblaciones.xml - xpath
     });
 }
 
-function load_models_v2(prov) {
+function load_models_v2(trad) {
   $.get("modules/products/resources/trademarks_and_models.xml", function(xml) {
     $("#model").empty();
     $("#model")
       .append('<option value="" selected="selected">Select model</option>');
     $(xml)
-      .find('trademark[id=' + prov + ']')
+      .find('trademark[id=' + trad + ']')
       .each(function() {
         $(this)
           .find('model')
@@ -886,9 +887,9 @@ function load_models_v2(prov) {
   });
 }
 
-function load_models_v1(prov) { // provinciasypoblaciones.xml - xpath
+function load_models_v1(trad) { // provinciasypoblaciones.xml - xpath
   var datos = {
-    idPoblac: prov
+    idPoblac: trad
   };
   $.post(
       "modules/products/controller/controller_products.class.php", datos,
@@ -900,7 +901,7 @@ function load_models_v1(prov) { // provinciasypoblaciones.xml - xpath
           .append(
             '<option value="" selected="selected">Select model</option>');
         if (models === 'error') {
-          load_models_v2(prov);
+          load_models_v2(trad);
         } else {
           for (var i = 0; i < models.length; i++) {
             $("#model")

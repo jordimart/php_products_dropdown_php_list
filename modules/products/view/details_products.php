@@ -20,10 +20,10 @@
                     <img class="prodImg" src="<?php echo $arrData['avatar'] ?>" alt="product">
 
                     <div id="container">
-                        <h4> <strong><?php echo $arrData['name'] ?></strong> </h4>
+                        <h4> <strong><?php echo $arrData['category'] ?></strong> </h4>
                         <br />
                         <p>
-                            <strong>Trademark: <br/></strong><?php echo $arrData['description'] ?>
+                            <strong>Trademark: <br/></strong><?php echo $arrData['trademark'] ?>
                         </p>
                         <p>
                             <strong>Model:</strong> <?php echo $arrData['model'] ?>

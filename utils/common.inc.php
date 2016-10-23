@@ -8,7 +8,12 @@
             $modelClass = $model_name;
 
             if (!method_exists($modelClass, $function)){
-                die($function . ' function not found in Model ' . $model_name);
+                //die($function . ' function not found in Model ' . $model_name);
+                $message = ($function . ' function not found in Model ' . $model_name);
+                $arrData = $message;
+                require_once 'view/inc/404.php';
+                exit();
+
             }
 
             $obj = $modelClass::getInstance();
@@ -17,7 +22,11 @@
                 return $obj->$function($arrArgument);
             }
         } else {
-            die($model_name . ' Model Not Found under Model Folder');
+            //die($model_name . ' Model Not Found under Model Folder');
+            $message = "Model Not Found under Model Folder";
+            $arrData = $message;
+            require_once 'view/inc/404.php';
+            exit();
         }
     }
 
@@ -35,6 +44,6 @@
     			$message = "NO TEMPLATE FOUND";
     			$arrData = $message;
     			require_once 'view/inc/404.php';
-    			die();
+    			exit();
     		}
     	}
