@@ -82,7 +82,8 @@ function validate_products($value) {
         //error message for date_entry
         if ($result['date_entry']) {
             //validate date entry must be on or before the today
-            $dates = ok_entry($_POST['date_entry']);
+            $dates = ok_entry($result['date_entry']);
+
             if (!$dates) {
                 $error['date_entry'] = 'The date must be on or before the today';
                 $ok = false;
@@ -90,22 +91,21 @@ function validate_products($value) {
         }
 
         //error message for date_exit
-        if ($result['date_exit'] && $result['date_entry']) {
+        if (($result['date_exit']) && ($result['date_entry'])) {
             //validate  date exit can not be earlier than the date entry
-            $dates = compare_dates($_POST['date_entry'], $_POST['date_exit']);
+            $dates = compare_dates($result['date_entry'], $result['date_exit']);
             if (!$dates) {
                 $error['date_exit'] = 'The departure date can not be earlier than the date of entry';
                 $ok = false;
             }
         }
 
-
         if (count($result['warranty']) <= 1) {
             $error['warranty'] = "Select 2 or more.";
             $ok = false;
         }
 
-        //if ($result != null && $result) {
+        if ($result != null && $result) {
 
                 //error message for serial number
                 if (!$result['serial_number']) {
@@ -149,26 +149,26 @@ function validate_products($value) {
                   $ok = false;
               }
               if (!$result['date_entry']) {
-                  if ($_POST['date_entry'] == "") {
+                  if ($result['date_entry'] == "") {
                       $error['date_entry'] = "The field is empty";
                       $ok = false;
                   }
               }
 
               if (!$result['date_exit']) {
-                  if ($_POST['date_exit'] == "") {
+                  if ($result['date_exit'] == "") {
                       $error['date_exit'] = "The field is empty";
                       $ok = false;
                   }
               }
 
               if (!$result['description']) {
-                  if ($_POST['description'] == "") {
+                  if ($result['description'] == "") {
                       $error['description'] = "The field is empty";
                       $ok = false;
                   }
               }
-    //};
+    };
     return $return = array('result' => $ok, 'error' => $error, 'data' => $result);
 
 
@@ -186,8 +186,9 @@ function ok_entry($date) {
     }
     if ($date > $date_today) {
         return false;
-    }
+    }else{
     return true;
+  }
 }
 
 function compare_dates($date_entry, $date_exit) {
@@ -200,6 +201,7 @@ function compare_dates($date_entry, $date_exit) {
     }
     if ($date_entry > $date_exit) {
         return false;
-    }
+    }else{
     return true;
+  }
 }

@@ -34,7 +34,7 @@ function upload_files() {
     //}
 
     ////////////////////////////////////////////////////////////////////////////
-    if ($_FILES['file']['size'] > 500000 ){
+    if ($_FILES['file']['size'] > 55000 ){
         $error .=  "Large File Size <br>";
     }
 
@@ -56,7 +56,7 @@ function upload_files() {
         }
         ////////////////////////////////////////////////////////////////////////////
         list($width, $height, $type, $attr) = @getimagesize($_FILES['file']['tmp_name']);
-        if ($width > 800 || $height > 800){
+        if ($width > 500 || $height > 500){
             $error .=   "Maximum width and height exceeded. Please upload images below 800x800 px size <br>";
         }
     }

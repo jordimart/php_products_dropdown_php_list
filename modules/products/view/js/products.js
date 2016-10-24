@@ -166,20 +166,20 @@ Dropzone.autoDiscover = false;
 $(document)
   .ready(function() {
 
-    // configuracion datepicker
+    // configuración datepicker
     $(function() {
       $('#date_entry')
         .datepicker({
           changeMonth: true,
           changeYear: true,
           defaultDate: 'today',
-          maxDate: 'today',
+          // maxDate: 'today',
           yearRange: '1900:2016',
           dateFormat: 'dd-mm-yy',
         });
     });
 
-    // configuracion datepicker
+    // configuración datepicker
     $(function() {
       $('#date_exit')
         .datepicker({
@@ -297,12 +297,13 @@ $(document)
           });
         },
         complete: function(file) {
-          // if(file.status == "success"){
-          // alert("El archivo se ha subido correctamente: " + file.name);
+          // if (file.status === "success") {
+          //  alert("El archivo se ha subido correctamente: " + file.name);
           //}
         },
         error: function(file) {
           // alert("Error subiendo el archivo " + file.name);
+
         },
         removedfile: function(file, serverFileName) {
           var name = file.name;
@@ -319,7 +320,7 @@ $(document)
               var json = data;
               if (json.res === true) {
                 var element;
-                if ((element = file.previewElement) !== null) {
+                if ((element = file.previewElement) != null) {
                   element.parentNode.removeChild(file.previewElement);
 
                 } else {
@@ -327,13 +328,14 @@ $(document)
                 }
               } else { // json.res == false, elimino la imagen también
                 var element;
-                if ((element = file.previewElement) !== null) {
+                if ((element = file.previewElement) != null) {
                   element.parentNode.removeChild(file.previewElement);
                 } else {
                   return false;
                 }
               }
             }
+
           });
         }
       });
@@ -408,7 +410,7 @@ $(document)
 // Funcion validate
 function validate_products() {
   // Recogemos datos
-  var result = true;
+
   var serial_number = document.getElementById('serial_number').value;
   var category = $('#category').val();
   var trademark = $('#trademark').val();
@@ -531,7 +533,7 @@ function validate_products() {
     $("#purchase_price")
       .focus()
       .after(
-        "<span class='error'>The price format is wrong,example 000000.0000 js</span>"
+        "<span class='error'>The price format is wrong,example 000000.0000 js < / span>"
       );
     result = false;
     return false;
@@ -548,7 +550,7 @@ function validate_products() {
     $("#sale_price")
       .focus()
       .after(
-        "<span class='error'>The price format is wrong,example 000000.0000 js</span>"
+        "<span class='error'>The price format is wrong,example 000000.0000 js < / span>"
       );
     result = false;
     return false;
@@ -565,7 +567,7 @@ function validate_products() {
     $("#provider")
       .focus()
       .after(
-        "<span class='error'>Provider must be 2 to 20 characters,no admit special characters js</span>"
+        "<span class='error'>Provider must be 2 to 20 characters,no admit special characters js < / span>"
       );
     result = false;
     return false;
@@ -579,7 +581,7 @@ function validate_products() {
     $("#weight")
       .focus()
       .after(
-        "<span class='error'>The weight format is wrong,you can not use more than 4 digits js</span>"
+        "<span class='error'>The weight format is wrong,you can not use more than 4 digits js < / span>"
       );
     result = false;
     return false;
@@ -593,7 +595,7 @@ function validate_products() {
     $("#height")
       .focus()
       .after(
-        "<span class='error'>The height format is wrong,you can not use more than 4 digits js</span>"
+        "<span class='error'>The height format is wrong,you can not use more than 4 digits js < / span>"
       );
     result = false;
     return false;
@@ -607,7 +609,7 @@ function validate_products() {
     $("#width")
       .focus()
       .after(
-        "<span class='error'>The width format is wrong,you can not use more than 4 digits js</span>"
+        "<span class='error'>The width format is wrong,you can not use more than 4 digits js < / span>"
       );
     result = false;
     return false;
@@ -624,12 +626,12 @@ function validate_products() {
     $("#description")
       .focus()
       .after(
-        "<span class='error'>The description format is wrong,you can not use spaecial characters js</span>"
+        "<span class='error'>The description format is wrong,you can not use  spaecial characters js < / span>"
       );
     result = false;
     return false;
   }
-
+  var result = true;
   // si los resultados son buenos lo enviamos a php
   if (result) {
     var data = {
@@ -657,6 +659,7 @@ function validate_products() {
           alta_products_json: data_products_JSON
         },
         function(response) {
+          console.log(response);
           if (response.success) {
             window.location.href = response.redirect;
           }
@@ -708,12 +711,12 @@ function validate_products() {
           }
         }
         if (xhr.responseJSON.error.date_entry)
-          $("#date_entry")
+          $("#e_date_entry")
           .focus()
           .after("<span  class='error1'>" +
             xhr.responseJSON.error.date_entry + "</span>");
         if (xhr.responseJSON.error.date_exit)
-          $("#date_exit")
+          $("#e_date_exit")
           .focus()
           .after("<span  class='error1'>" +
             xhr.responseJSON.error.date_exit + "</span>");
