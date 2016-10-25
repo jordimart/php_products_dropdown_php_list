@@ -81,7 +81,7 @@ function alta_products() {
         }
         header('HTTP/1.0 400 Bad error');
         echo json_encode($jsondata);
-       // exit;
+        exit;
     }
 }
 
@@ -89,6 +89,7 @@ if ((isset($_GET["upload"])) && ($_GET["upload"] == true)) {
 
     $result_avatar = upload_files();
     $_SESSION['result_avatar'] = $result_avatar;
+    exit;
 }
 
 if (isset($_GET["delete"]) && $_GET["delete"] == true) {
@@ -96,8 +97,10 @@ if (isset($_GET["delete"]) && $_GET["delete"] == true) {
     $result = remove_files();
     if ($result === true) {
         echo json_encode(array("res" => true));
+        exit;
     } else {
         echo json_encode(array("res" => false));
+        exit;
     }
 }
 
